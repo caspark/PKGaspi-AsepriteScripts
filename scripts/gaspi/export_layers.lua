@@ -102,17 +102,17 @@ local function exportLayers(sprite, root_layer, filename, group_sep, data)
                 -- make a selection on the active layer
                 app.activeLayer = layer;
                 sprite.selection = Selection(boundingRect);
-                
+
                 -- create a new sprite from that selection
                 app.command.NewSpriteFromSelection()
-                
+
                 -- save it as png
                 app.command.SaveFile {
                     ui=false,
                     filename=filename
                 }
                 app.command.CloseFile()
-                
+
                 app.activeSprite = layer.sprite  -- Set the active sprite to the current layer's sprite
                 sprite.selection = Selection();
             else
@@ -135,7 +135,7 @@ dlg:file{
 dlg:entry{
     id = "filename",
     label = "File name format:",
-    text = "{layergroups}{layername}"
+    text = "{spritename}-{layergroups}{layername}"
 }
 dlg:combobox{
     id = 'format',
@@ -258,9 +258,5 @@ Sprite:resize(Sprite.width / dlg.data.scale, Sprite.height / dlg.data.scale)
 
 -- Save the original file if specified
 if dlg.data.save then Sprite:saveAs(dlg.data.directory) end
-
--- Success dialog.
-local dlg = MsgDialog("Success!", "Exported " .. n_layers .. " layers.")
-dlg:show()
 
 return 0
